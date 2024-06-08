@@ -1,16 +1,16 @@
 @font-face {
     font-family: SecretServiceRegular;
-    src: url("/fonts/SecretService-Regular.woff");
+    src: url("../static/fonts/SecretService-Regular.woff");
 }
 
 @font-face {
     font-family: RobotoBold;
-    src: url("/fonts/Roboto-Bold.ttf");
+    src: url("../static/fonts/Roboto-Bold.ttf");
 }
 
 @font-face {
     font-family: RobotoRegular;
-    src: url("/fonts/Roboto-Regular.ttf");
+    src: url("../static/fonts/Roboto-Regular.ttf");
 }
 
 body {

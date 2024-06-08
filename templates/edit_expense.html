@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Создание категории доходов</title>
-    <link rel="stylesheet" href="styles/bootstrap.min.css">
-    <link rel="stylesheet" href="styles/style.css">
+    <title>Редактирование категории расходов</title>
+    <link rel="stylesheet" href="../styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
 <div class="layout d-flex">
     <aside class="sidebar d-flex flex-column flex-shrink-0">
         <div class="logo">
             <a href="#">
-                <img src="images/logo.png" alt="Logo">
+                <img src="../images/logo.png" alt="Logo">
             </a>
         </div>
         <div class="menu d-flex flex-column justify-content-between flex-grow-1">
@@ -100,7 +100,7 @@
     </aside>
 
     <div class="content flex-grow-1">
-        <h1 class="mb-4">Создание категории доходов</h1>
+        <h1 class="mb-4">Редактирование категории расходов</h1>
         <div class="form">
             <div class="mb-3">
                 <label for="formGroupExampleInput"></label><input type="text" class="form-control"
@@ -108,24 +108,24 @@
             </div>
             <div class="mt-auto">
                 <button class="btn btn-success me-2" data-bs-toggle="modal"
-                        data-bs-target="#createConfirmationModal">Создать
+                        data-bs-target="#deleteConfirmationModal">Сохранить
                 </button>
                 <button class="btn btn-danger">Отмена
                 </button>
             </div>
             <!-- Модальное окно -->
-            <div class="modal fade" id="createConfirmationModal" tabindex="-1"
+            <div class="modal fade" id="deleteConfirmationModal" tabindex="-1"
                  aria-labelledby="deleteModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-body">
-                            Вы действительно хотите создать эту категорию?
+                            Вы действительно хотите редактировать эту категорию? Связанные расходы будут изменены.
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" data-bs-dismiss="modal">Да,
-                                создать
+                                изменить
                             </button>
-                            <button type="button" class="btn btn-danger">Нет, не создавать</button>
+                            <button type="button" class="btn btn-danger">Нет, не изменять</button>
                         </div>
                     </div>
                 </div>
@@ -133,6 +133,6 @@
         </div>
     </div>
 </div>
-<script src="scripts/bootstrap.min.js"></script>
+<script src="../scripts/bootstrap.min.js"></script>
 </body>
 </html>
