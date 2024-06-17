@@ -10,7 +10,7 @@ export class Form {
 
         const accessToken = localStorage.getItem(Auth.accessTokenKey);
         if (accessToken) {
-            location.href = '#/choice';
+            location.href = '#/income&expense';
             return;
         }
 
@@ -32,7 +32,7 @@ export class Form {
             },
         ];
 
-        if (this.page === 'signup') {
+        if (this.page === 'register') {
             this.fields.unshift({
                     name: 'name',
                     id: 'name',
@@ -63,7 +63,7 @@ export class Form {
             that.processForm()
         }
 
-        if (this.page === 'signup') {
+        if (this.page === 'register') {
             this.agreeElement = document.getElementById('agree');
             this.agreeElement.onchange = function () {
                 that.validateForm()
@@ -99,9 +99,9 @@ export class Form {
             const email = this.fields.find(item => item.name === 'email').element.value;
             const password = this.fields.find(item => item.name === 'password').element.value;
 
-            if (this.page === 'signup') {
+            if (this.page === 'register') {
                 try {
-                    const result = await CustomHttp.request(config.host + '/signup', 'POST', {
+                    const result = await CustomHttp.request(config.host + '/register', 'POST', {
                         name: this.fields.find(item => item.name === 'name').element.value,
                         lastName: this.fields.find(item => item.name === 'lastName').element.value,
                         email: email,

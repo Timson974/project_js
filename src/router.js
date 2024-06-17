@@ -1,8 +1,5 @@
 import {Form} from "./components/form.js";
-import {Choice} from "./components/choice.js";
-import {Test} from "./components/test.js";
-import {Result} from "./components/result.js";
-import {RightAnswers} from "./components/right-answers.js";
+import {Chart} from "./components/chart.js";
 import {Auth} from "./services/auth.js";
 
 export class Router {
@@ -19,7 +16,6 @@ export class Router {
                 route: '#/',
                 title: 'Главная',
                 template: 'index.html',
-                styles: 'styles/index.css',
                 load: () => {
 
                 }
@@ -28,7 +24,6 @@ export class Router {
                 route: '#/register',
                 title: 'Регистрация',
                 template: 'templates/register.html',
-                styles: 'styles/form.css',
                 load: () => {
                     new Form('register');
                 }
@@ -37,7 +32,6 @@ export class Router {
                 route: '#/login',
                 title: 'Вход в систему',
                 template: 'templates/login.html',
-                styles: 'styles/form.css',
                 load: () => {
                     new Form('login');
                 }
@@ -46,34 +40,30 @@ export class Router {
                 route: '#/incomes',
                 title: 'Прибыли',
                 template: 'templates/incomes.html',
-                styles: 'styles/style.css',
                 load: () => {
                     new Income();
                 }
             },
             {
-                route: '#/expenses',
+                route: '#/chart',
                 title: 'Затраты',
                 template: 'templates/expenses.html',
-                styles: 'styles/test.css',
                 load: () => {
-                    new Expense();
+                    new Chart();
                 }
             },
             {
                 route: '#/create-income',
                 title: 'Создание Прибыли',
                 template: 'templates/create_income.html',
-                styles: 'styles/style.css',
                 load: () => {
-                    new CreateIncome();
+                    new Chart();
                 }
             },
             {
                 route: '#/create-expense',
                 title: 'Создание Затраты',
                 template: 'templates/create_expense.html',
-                styles: 'styles/style.css',
                 load: () => {
                     new CreateExpense();
                 }
@@ -82,7 +72,6 @@ export class Router {
                 route: '#/edit-income',
                 title: 'Изменение Прибыли',
                 template: 'templates/edit_income.html',
-                styles: 'styles/style.css',
                 load: () => {
                     new EditIncome();
                 }
@@ -91,7 +80,6 @@ export class Router {
                 route: '#/edit-expense',
                 title: 'Изменение Затраты',
                 template: 'templates/edit_expense.html',
-                styles: 'styles/style.css',
                 load: () => {
                     new EditExpense();
                 }
@@ -100,7 +88,6 @@ export class Router {
                 route: '#/income&expense',
                 title: 'Общие Прибыли и Затраты',
                 template: 'templates/income&expense.html',
-                styles: 'styles/style.css',
                 load: () => {
                     new Income&Expense();
                 }
@@ -109,7 +96,6 @@ export class Router {
                 route: '#/create-income&expense',
                 title: 'Создание Прибыли & Затраты',
                 template: 'templates/create_income&expense.html',
-                styles: 'styles/style.css',
                 load: () => {
                     new CreateIncome&Expense();
                 }
@@ -118,7 +104,6 @@ export class Router {
                 route: '#/edit-income&expense',
                 title: 'Изменение Прибыли & Затраты',
                 template: 'templates/edit_income&expense.html',
-                styles: 'styles/style.css',
                 load: () => {
                     new EditIncome&Expense();
                 }

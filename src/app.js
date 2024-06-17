@@ -2,7 +2,7 @@ import "bootstrap/dist/js/bootstrap.min.js";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import "..styles/style.css";
+import "../styles/style.css";
 
 import {Router} from "./router.js";
 
