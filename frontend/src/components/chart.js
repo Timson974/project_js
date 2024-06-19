@@ -1,4 +1,4 @@
-import Chart from 'chart.js/auto';
+// import Chart from 'chart.js/auto';
 
 const incomeCtx = document.getElementById('incomeChart').getContext('2d');
 const expensesCtx = document.getElementById('expensesChart').getContext('2d');
