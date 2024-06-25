@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Страница авторизации</title>
-    <link rel="stylesheet" href="../styles/bootstrap.min.css">
-    <link rel="stylesheet" href="../styles/style.css">
-</head>
-<body>
-<div class="d-flex  justify-content-center auth-container">
+
+<!--<div class="d-flex  justify-content-center auth-container">-->
     <div class=" form">
         <div class="logo mb-5 text-center">
             <img src="../images/logo.png" alt="Logo">
@@ -26,7 +17,7 @@
 </svg>
 
                 </span>
-                    <input type="email" class="form-control" id="validationCustomUsername"
+                    <input type="email" class="form-control" id="email"
                            aria-describedby="inputGroupPrepend" placeholder="Электронная почта" required>
                 </div>
             </div>
@@ -38,23 +29,19 @@
                                                                                                                      fill="#6C757D"/>
                 </svg>
                 </span>
-                <input type="password" class="form-control" id="validationCustomPassword"
+                <input type="password" class="form-control" id="password"
                        aria-describedby="inputGroupPrepend" placeholder="Пароль" required>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
+                <input class="form-check-input" type="checkbox" value="" id="agree">
+                <label class="form-check-label" for="agree">
                     Запомнить меня
                 </label>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Войти</button>
+            <button type="submit" class="btn btn-primary w-100" id="process">Войти</button>
         </form>
         <p class="mt-4">Еще нет аккаунта? <a href="/#/signup">Пройдите регистрацию</a></p>
     </div>
-    </div>
+<!--    </div>-->
 
-
-<script src="scripts/scripts.js"></script>
-</body>
-</html>
 

@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Страница регистрации</title>
-    <link rel="stylesheet" href="../styles/bootstrap.min.css">
-    <link rel="stylesheet" href="../styles/style.css">
-</head>
-<body>
-<div class="d-flex align-items-center flex-column h-100">
+
+<!--<div class="d-flex align-items-center flex-column h-100">-->
     <div class="auth-container form">
         <div class="logo mb-5 text-center">
             <img src="../images/logo.png" alt="Logo">
@@ -24,7 +15,7 @@
 </svg>
 
                 </span>
-                    <label for="validationLogin"></label><input type="email" class="form-control" id="validationLogin"
+                    <input type="text" class="form-control" id="name"
                                                                 aria-describedby="inputGroupPrepend" placeholder="ФИО"
                                                                 required>
                 </div>
@@ -39,7 +30,7 @@
 </svg>
 
                 </span>
-                    <label for="validationEmail"></label><input type="email" class="form-control" id="validationEmail"
+                    <input type="email" class="form-control" id="email"
                                                                 aria-describedby="inputGroupPrepend"
                                                                 placeholder="Электронная почта" required>
                 </div>
@@ -53,7 +44,7 @@
       fill="#6C757D"/>
 </svg>
                 </span>
-                    <input type="password" class="form-control" id="validationCustomPassword"
+                    <input type="password" class="form-control" id="password"
                            aria-describedby="inputGroupPrepend" placeholder="Пароль" required>
                 </div>
             </div>
@@ -66,22 +57,17 @@
       fill="#6C757D"/>
 </svg>
                 </span>
-                    <label for="validationConfirmedPassword"></label><input type="password" class="form-control"
-                                                                            id="validationConfirmedPassword"
+                    <input type="password" class="form-control"
+                                                                            id="repeatPassword"
                                                                             aria-describedby="inputGroupPrepend"
                                                                             placeholder="Подтверждение пароля" required>
                 </div>
             </div>
-            <div class="custom-control custom-checkbox mb-4">
-                <input type="checkbox" class="custom-control-input" id="rememberMe">
-                <label class="custom-control-label" for="rememberMe">Запомнить меня</label>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Войти</button>
+
+            <button type="button" class="btn btn-primary w-100" id="process">Войти</button>
         </form>
         <p class="mt-4">Уже есть аккаунт? <a href="/#/login">Войдите в систему</a></p>
     </div>
-</div>
-<script src="scripts/scripts.js"></script>
-</body>
-</html>
+<!--</div>-->
+
 
