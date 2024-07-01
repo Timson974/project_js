@@ -1,19 +1,19 @@
 import {Auth} from "./auth.js";
 
 export class CustomHttp {
-    static async request(url, method = "GET", body = null) {
-
+    static async request(url, method= 'GET', body= null) {
         const params = {
             method: method,
             headers: {
                 'Content-type': 'application/json',
-                'Accept': 'application/json',
+                'Accept': 'application/json'
             }
-        };
+        }
         let token = localStorage.getItem(Auth.accessTokenKey);
         if (token) {
-            params.headers['x-access-token'] = token;
+            params.headers['x-auth-token'] = token;
         }
+
         if (body) {
             params.body = JSON.stringify(body)
         }
@@ -26,13 +26,12 @@ export class CustomHttp {
                 if (result) {
                     return await this.request(url, method, body)
                 } else {
-                    return null;
+                    return null
                 }
             }
             throw new Error(response.message);
         }
 
         return await response.json();
-
     }
 }

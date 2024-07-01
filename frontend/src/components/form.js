@@ -1,22 +1,21 @@
-import {CustomHttp} from "../services/custom-http.js";
 import {Auth} from "../services/auth.js";
 import config from "../../config/config.js";
+import {CustomHttp} from "../services/custom-http.js";
 
 export class Form {
     constructor(page) {
-        this.rememberMe = null;
+        this.passwordElement = null;
+        this.rePasswordElement = null;
         this.processElement = null;
+        this.remCheckElement = null;
         this.page = page;
 
+        const accessToken = localStorage.getItem(Auth.accessTokenKey);
+        if (accessToken) {
+            location.href = '#/';
+            return;
+        }
         this.fields = [
-
-            // {
-            //     name: 'name',
-            //     id: 'name',
-            //     element: null,
-            //     regex: /^[А-Я][а-я]+(\s[А-Я][а-я]+)?$/,
-            //     valid: false
-            // },
 
             {
                 name: 'email',
@@ -36,198 +35,129 @@ export class Form {
 
         if (this.page === 'signup') {
             this.fields.unshift({
-                    name: 'name',
-                    id: 'name',
+                    name: 'fullName',
+                    id: 'fullName',
                     element: null,
-                    regex: /^[А-Я][а-я]+\s*$/,
-                    valid: false
-                },
-                {
-                    name: 'repeatPassword',
-                    id: 'repeatPassword',
-                    element: null,
-                    regex: null,
+                    regex: /^[A-ZА-ЯЁ][a-zа-яё]+(\s+[A-ZА-ЯЁ][a-zа-яё]+)(\s+[A-ZА-ЯЁ][a-zа-яё]+)?/,
                     valid: false
                 })
+            this.fields.push({
+                name: 'rePassword',
+                id: 'rePassword',
+                element: null,
+                regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
+                valid: false
+            })
         }
 
 
         const that = this;
         this.fields.forEach(item => {
             item.element = document.getElementById(item.id);
-            // console.log(item.name, item.element);
             item.element.onchange = function () {
                 that.validateField.call(that, item, this)
             }
         })
-
+        this.rePasswordElement = document.getElementById('rePassword');
+        this.passwordElement = document.getElementById('password');
         this.processElement = document.getElementById('process');
         this.processElement.onclick = function () {
             that.processForm()
         }
 
         if (this.page === 'login') {
-            this.rememberMe = document.getElementById('agree');
-            this.rememberMe.onchange = function () {
-                that.validateForm()
-            }
+            this.remCheckElement = document.getElementById('remCheck');
         }
     }
 
-    // validateField(field, element) {
-    //     if (!element.value || !element.value.match(field.regex)) {
-    //         element.parentNode.style.borderColor = 'red';
-    //         field.valid = false;
-    //     } else {
-    //         element.parentNode.removeAttribute('style');
-    //         field.valid = true;
-    //     }
-    //     this.validateForm()
-    // }
 
-    validateField(field) {
-        const value = field.element.value;
-        if (!value || !value.match(field.regex)) {
-            field.element.parentNode.style.borderColor = 'red';
+    validateField(field, element) {
+
+        if (!element.value || !element.value.match(field.regex)) {
+            element.parentNode.style.border = '1px solid red';
             field.valid = false;
         } else {
-            // field.element.parentNode.style.borderColor = ''; // or use removeAttribute('style')
-            field.element.parentNode.removeAttribute('style');
-
+            element.parentNode.removeAttribute('style');
             field.valid = true;
-            console.log(field.name + " is valid"); // Добавьте эту строку для отладки
         }
-        this.validateForm();
+
+        this.validateForm()
     }
 
-    // validateField(field) {
-    //     const value = field.element.value;
-    //     if (field.name === 'repeatPassword') {
-    //         const passwordValue = this.fields.find(f => f.name === 'password').element.value;
-    //         if (value !== passwordValue) {
-    //             field.element.parentNode.style.borderColor = 'red';
-    //             field.valid = false;
-    //         } else {
-    //             field.element.parentNode.removeAttribute('style');
-    //             field.valid = true;
-    //         }
-    //     } else if (!value || !value.match(field.regex)) {
-    //         field.element.parentNode.style.borderColor = 'red';
-    //         field.valid = false;
-    //     } else {
-    //         field.element.parentNode.removeAttribute('style');
-    //         field.valid = true;
-    //     }
-    //     console.log(field.name + " is valid:", field.valid); // Для отладки
-    //     this.validateForm();
-    // }
-
-
-
     validateForm() {
+        if (this.page === 'signup') {
+            if (!this.passwordElement.value || !this.rePasswordElement.value || this.passwordElement.value !== this.rePasswordElement.value) {
+                this.rePasswordElement.parentNode.style.border = '1px solid red';
+            } else {
+                this.passwordElement.parentNode.removeAttribute('style');
+                this.rePasswordElement.parentNode.removeAttribute('style');
+            }
+        }
+
         const validForm = this.fields.every(item => item.valid);
-        const isValid = this.rememberMe ? this.rememberMe.checked && validForm : validForm;
+        const isValid = this.rePasswordElement ? this.passwordElement.value === this.rePasswordElement.value && validForm : validForm;
         if (isValid) {
             this.processElement.removeAttribute('disabled');
         } else {
             this.processElement.setAttribute('disabled', 'disabled')
         }
-
-        console.log(this.fields)
-        console.log(isValid)
         return isValid
     }
-
-    // validateForm() {
-    //     const validForm = this.fields.every(item => item.valid);
-    //     this.processElement.disabled = !validForm;
-    //     console.log("All fields valid:", validForm);
-    //     return validForm;
-    // }
-
 
     async processForm() {
         if (this.validateForm()) {
             const email = this.fields.find(item => item.name === 'email').element.value;
             const password = this.fields.find(item => item.name === 'password').element.value;
-            const [name, lastName] = this.fields.find(item => item.name === 'name').element.value.split('.');
-
+            let remCheck;
+            if (this.page === 'login') {
+                remCheck = this.remCheckElement.checked;
+            }
             if (this.page === 'signup') {
                 try {
                     const result = await CustomHttp.request(config.host + '/signup', 'POST', {
-                        name: name,
-                        lastName: lastName,
+                        name: this.fields.find(item => item.name === 'fullName').element.value.split(' ')[0],
+                        lastName: this.fields.find(item => item.name === 'fullName').element.value.split(' ').slice(1).toString().replace(',', ' '),
                         email: email,
                         password: password,
-                        passwordRepeat: this.fields.find(item => item.name === repeatPassword).element.value
+                        passwordRepeat: this.fields.find(item => item.name === 'rePassword').element.value
                     })
-
-                    if (result) {
+                    if(result) {
                         if (result.error || !result.user) {
                             throw new Error(result.message);
                         }
                     }
-                } catch (error) {
-                    return console.log(error)
+                } catch (e) {
+                    return console.log(e)
                 }
-
             }
+
             try {
                 const result = await CustomHttp.request(config.host + '/login', 'POST', {
                     email: email,
                     password: password,
+                    rememberMe: remCheck
                 })
 
                 if (result) {
-                    if (result.error || !result.accessToken || !result.refreshToken || !result.fullName || !result.userId) {
+                    if (result.error || !result.tokens.accessToken || !result.tokens.refreshToken
+                        ||  !result.user.id || !result.user.name || !result.user.lastName) {
                         throw new Error(result.message);
                     }
 
-                    Auth.setTokens(result.accessToken, result.refreshToken);
+                    Auth.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
                     Auth.setUserInfo({
-                        fullName: result.fullName,
-                        userId: result.userId,
+                        name: result.user.name,
+                        lastName: result.user.lastName,
+                        userId: result.user.id,
                         email: email
                     })
                     location.href = '#/';
                 }
-            } catch (error) {
-                console.log(error);
+            } catch (e) {
+                console.log(e)
             }
+
         }
     }
-
-    // async processForm() {
-    //     if (this.validateForm()) {
-    //         const email = this.fields.find(item => item.name === 'email').element.value;
-    //         const password = this.fields.find(item => item.name === 'password').element.value;
-    //         const name = this.fields.find(item => item.name === 'name').element.value;
-    //
-    //         try {
-    //             const result = await CustomHttp.request(config.host + '/signup', 'POST', {
-    //                 name: name,
-    //                 email: email,
-    //                 password: password,
-    //                 passwordRepeat: this.fields.find(item => item.name === 'repeatPassword').element.value
-    //             });
-    //
-    //             if (result && !result.error) {
-    //                 Auth.setTokens(result.accessToken, result.refreshToken);
-    //                 Auth.setUserInfo({
-    //                     fullName: result.fullName,
-    //                     userId: result.userId,
-    //                     email: email
-    //                 });
-    //                 window.location.href = '/main.html'; // Убедитесь, что путь корректен
-    //             } else {
-    //                 throw new Error(result.message);
-    //             }
-    //         } catch (error) {
-    //             console.error("Registration error:", error);
-    //         }
-    //     }
-    // }
-
 }
-
 
